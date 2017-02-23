@@ -1,0 +1,16 @@
+import piece;
+
+public class play {
+    int[][] sizeBoard = new piece[8][8];
+    boolean[][] loyaltyBoard = new boolean[8][8];
+    public static void main(String[] args) {
+	for (int i = 0; i < sizeBoard.length; i++) {
+	    sizeBoard[0][i] = 1;
+	    loyaltyBoard[0][i] = true;
+	    sizeBoard[1][i] = 1;
+	    loyaltyBoard[0][i] = true;
+	    sizeBoard[sizeBoard.length - 1][i] = 1;
+	    loyaltyBoard[0][i] = false;
+	    sizeBoard[sizeBoard.length - 2][i] = 1;
+	    loyaltyBoard[0][i] = false;
+}

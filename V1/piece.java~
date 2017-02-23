@@ -1,0 +1,16 @@
+public class piece {
+    private int size;
+    private boolean loyalty;
+    private short x;
+    private short y;
+
+    public piece () {
+    }
+    public piece (SIZE, LOYALTY, X, Y) {
+	size = SIZE;
+	loyalty = LOYALTY;
+	x = X;
+	y = Y;
+    }
+
+}
