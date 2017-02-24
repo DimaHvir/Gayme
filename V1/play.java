@@ -35,7 +35,7 @@ public class play {
 	}
 	System.out.println("\n");
     }
-    public static void game() {//plays the game
+    public static boolean game() {//plays the game
 	int x, y, tarx, tary;
 	while (0 == 0){
 	    display();
@@ -45,9 +45,9 @@ public class play {
 		y = Keyboard.readInt() - 1;
 		System.out.print("\ny-coord of piece you're moving: ");
 		x = Keyboard.readInt() - 1;
-		System.out.print("\nx-coord of target");
+		System.out.print("\nx-coord of target: ");
 		tary = Keyboard.readInt() - 1;
-		System.out.print("/ny-coord of target");
+		System.out.print("\ny-coord of target: ");
 		tarx = Keyboard.readInt() - 1;
 		if(x < len && x >= 0 && y < len && y >= 0 && tarx < len && tarx >= 0 && tary < len && tary >= 0 && loyaltyBoard[x][y] == true && sizeBoard[x][y] != 0) { //Just checking if the pieces are within the boundaries and are owned by the user
 		    if(Math.abs(x - tarx) < 3 && Math.abs(y - tary) < 3) {
@@ -63,19 +63,64 @@ public class play {
 			    break;
 			}
 			else if(sizeBoard[tarx][tary] < sizeBoard[x][y]) {
-			    System.out.println("swag");
 			    sizeBoard[tarx][tary] = sizeBoard[x][y];
 			    sizeBoard[x][y] = 0;
 			    loyaltyBoard[tarx][tary] = true;
 			    break;
 			}
-			    System.out.println("Your piece is not big enough to take over that target");
+			System.out.println("Your piece is not big enough to take over that target");
 		    }
 		    else {
 			System.out.println("that target is too far away");
 		    }	    
 		}
 		else {
+		    if(loyaltyBoard[x][y] && y >= 6) {
+			return true;
+		    }
+		    System.out.println("That is not your piece(or that piece doesn't exist/ is outside of the boundaries");
+		}
+	    }
+	    display();
+	    while (0 == 0) {
+		System.out.println("\n Black's Turn: what would you like to move? \n");
+		System.out.print("x-coord of piece you're moving: ");
+		y = Keyboard.readInt() - 1;
+		System.out.print("\ny-coord of piece you're moving: ");
+		x = Keyboard.readInt() - 1;
+		System.out.print("\nx-coord of target: ");
+		tary = Keyboard.readInt() - 1;
+		System.out.print("\ny-coord of target: ");
+		tarx = Keyboard.readInt() - 1;
+		if(x < len && x >= 0 && y < len && y >= 0 && tarx < len && tarx >= 0 && tary < len && tary >= 0 && loyaltyBoard[x][y] == false && sizeBoard[x][y] != 0) { //Just checking if the pieces are within the boundaries and are owned by the user
+		    if(Math.abs(x - tarx) < 3 && Math.abs(y - tary) < 3) {
+			if(sizeBoard[tarx][tary] == 0) {
+			    sizeBoard[tarx][tary] = sizeBoard[x][y];
+			    sizeBoard[x][y] = 0;
+			    loyaltyBoard[tarx][tary] = false;
+			    break;
+			}
+			else if(! loyaltyBoard[tarx][tary]) {
+ 			    sizeBoard[tarx][tary] = sizeBoard[tarx][tary] + sizeBoard[x][y];
+			    sizeBoard[x][y] = 0;
+			    break;
+			}
+			else if(sizeBoard[tarx][tary] < sizeBoard[x][y]) {
+			    sizeBoard[tarx][tary] = sizeBoard[x][y];
+			    sizeBoard[x][y] = 0;
+			    loyaltyBoard[tarx][tary] = false;
+			    break;
+			}
+			System.out.println("Your piece is not big enough to take over that target");
+		    }
+		    else {
+			System.out.println("that target is too far away");
+		    }	    
+		}
+		else {
+		    if(! loyaltyBoard[x][y] && y <= 1) {
+			return false;
+		    }
 		    System.out.println("That is not your piece(or that piece doesn't exist/ is outside of the boundaries");
 		}
 	    }
@@ -85,6 +130,11 @@ public class play {
     public static void main(String[] args) {
         setup();
 	display();
-	game();
+	if(game()) {
+	    System.out.println("Congrats Whitey!");
+	}
+	else {
+	    System.out.println("Congrats Blackey!");
+	}
     }
 }
